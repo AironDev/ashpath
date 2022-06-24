@@ -1,7 +1,7 @@
 <?php
 
 
-URL::forceSchema('https');
+// URL::forceSchema('https');
 
 Route::get('/clearapp', function ()
 {

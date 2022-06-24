@@ -35,8 +35,8 @@
     # END - Disable server signature
 
     # enabling HTTPS
-    # RewriteCond %{HTTPS} !=on
-    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+     RewriteCond %{HTTPS} !=on
+     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     #
 
     # disabling the TRACE method from your web server

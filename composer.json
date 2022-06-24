@@ -68,7 +68,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "TechVill\\Theme\\": "src/"
+            "TechVill\\Theme\\": "packages/TechVill/Theme/src/"
         },
         "files": [
             "app/helpers.php"

@@ -1,6 +1,6 @@
     <div class="px-4 py-1 d-flex justify-content-between">
         <a href="{{ url('/') }}">
-            <img src="{{theme_asset('public/images/logos/'.$logo)}}" style="width:205px" alt="paymoney">
+            <img src="{{theme_asset('public/images/logos/'.$logo)}}" style="width:75px" alt="paymoney">
         </a>
 
         <div class="d-lg-none">
@@ -121,7 +121,7 @@
                             <p class="side-text my-0 ml-2">{{ __('Request Money') }}</p>
                     </div>
                 </a>
-
+<!-- 
                 @if(Common::has_permission(auth()->id(),'manage_exchange'))
                     <a href="{{ url('/exchange') }}">
                         <div class="side-list d-flex align-items-center {{ (request()->is('exchange')) ? 'side-active' : '' }}">
@@ -134,7 +134,7 @@
                         </div>
                     </a>
                 @endif
-
+ -->
                 @if(Common::has_permission(auth()->id(),'manage_withdrawal'))
                     <a href="{{ url('/payouts') }}">
                         <div class="side-list d-flex align-items-center {{ request()->is('payouts') || request()->is('payout') ||  request()->is('payout/*') ? 'side-active' : '' }}">
@@ -155,7 +155,7 @@
                     </a>
                 @endif
 
-                @if(config('crypto_exchange.is_active') && \App\Utility\CryptoExchange::userCryptoWalletcheck())
+                <!-- @if(config('crypto_exchange.is_active') && \App\Utility\CryptoExchange::userCryptoWalletcheck())
                     <a href="{{ url('/crypto-exchange/fiat-to-crypto') }}">
                         <div class="side-list d-flex align-items-center {{ (request()->is('crypto-exchange/*')) ? 'side-active' : '' }}">
                             <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-currency-bitcoin sidebaricon" viewBox="0 0 16 16">
@@ -165,7 +165,7 @@
                         </div>
                     </a>
                 @endif
-
+ -->
                 @if(Common::has_permission(auth()->id(),'manage_merchant'))
                     <a href="{{ url('/merchants') }}">
                         <div class="side-list d-flex align-items-center {{ request()->is('merchants') || request()->is('merchant/*') || request()->is('exchange-of-money') || request()->is('exchange-of-money-success/*') ? 'side-active' : '' }}">

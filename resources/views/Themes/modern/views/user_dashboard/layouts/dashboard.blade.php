@@ -51,7 +51,7 @@
                             @endif
                         @endif
                     @endif
-                    <p class="wel-text">{{ __('Thanks for using') }} <span class="text-primary">{{ getCompanyName() }} </span>{{ __('services') }}</p>
+                    <p class="wel-text">{{ __('Thanks for using') }} <span class="text-primary">{{ 'Ashpath' }} </span>{{ __('services') }}</p>
                 </div>
 
                 <div class="col-md-5 p-4">

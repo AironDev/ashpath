@@ -1,5 +1,8 @@
 <?php
 
+
+URL::forceSchema('https');
+
 Route::get('/clearapp', function ()
 {
     Artisan::call('config:clear');

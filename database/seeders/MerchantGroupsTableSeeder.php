@@ -14,7 +14,7 @@ class MerchantGroupsTableSeeder extends Seeder
      */
     public function run()
     {
-        // MerchantGroup::truncate();
+        MerchantGroup::truncate();
         MerchantGroup::insert([
             ['id' => 1, 'name' => 'Premium', 'description' => 'This is the premium merchant group', 'fee' => 0.51234567, 'is_default' => 'No'],
             ['id' => 2, 'name' => 'Gold', 'description' => 'This is the gold merchant group', 'fee' => 1.99933344, 'is_default' => 'No'],

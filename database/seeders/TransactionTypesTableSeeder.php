@@ -13,7 +13,7 @@ class TransactionTypesTableSeeder extends Seeder
      */
     public function run()
     {   
-        // \DB::table('transaction_types')->truncate();
+        \DB::table('transaction_types')->truncate();
         $type = [
             ['id' => 1, 'name' => 'Deposit'],
             ['id' => 2, 'name' => 'Withdrawal'],

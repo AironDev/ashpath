@@ -101,14 +101,14 @@ if (!function_exists('theme_asset')) {
         $themeInfo = Theme::getThemeInfo($currentTheme);
 
         if (file_exists(base_path('resources/views/Themes/' . $currentTheme . '/assets/' . $path))) {
-            return url('resources/views/Themes/' . $currentTheme . '/assets/' . $path);
+            return secure_url('resources/views/Themes/' . $currentTheme . '/assets/' . $path);
         }
 
         if (!empty($themeInfo->get('parent')) && file_exists(base_path('resources/views/Themes/' . $themeInfo->get('parent') . '/assets/' . $path))) {
-            return url('resources/views/Themes/' . $themeInfo->get('parent') . '/assets/' . $path);
+            return secure_url('resources/views/Themes/' . $themeInfo->get('parent') . '/assets/' . $path);
         }
 
-        return url($path);
+        return secure_url($path);
 
        
     }

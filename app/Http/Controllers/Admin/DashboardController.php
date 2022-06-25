@@ -118,7 +118,7 @@ class DashboardController extends Controller
         // $data['defaultCurrency'] = Currency::find(Session::get('default_currency'));
 
         $defC = Session::get('default_currency') ?? 1;
-        $data['defaultCurrency'] = Currency::find($defC);
+        $data['defaultCurrency'] = Currency::find(1);
         //Currency Exchange End
         $data['totalUser']       = User::count();
         $data['totalMerchant']   = Merchant::count();

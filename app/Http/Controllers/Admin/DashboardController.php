@@ -115,7 +115,10 @@ class DashboardController extends Controller
         //wallet end
         //Currency Exchange Start
         $data['currencies']      = Currency::where(['status' => 'Active'])->get();
-        $data['defaultCurrency'] = Currency::find(Session::get('default_currency'));
+        // $data['defaultCurrency'] = Currency::find(Session::get('default_currency'));
+
+        $defC = Session::get('default_currency') ?? 1;
+        $data['defaultCurrency'] = Currency::find($defC);
         //Currency Exchange End
         $data['totalUser']       = User::count();
         $data['totalMerchant']   = Merchant::count();

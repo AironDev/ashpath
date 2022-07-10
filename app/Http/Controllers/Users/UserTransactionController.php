@@ -43,7 +43,7 @@ class UserTransactionController extends Controller
         $data['transactions'] = $transaction->getTransactions($from, $to, $type, $wallet, $status);
 
         $data['wallets']      = Wallet::with(['currency:id,code'])->where(['user_id' => Auth::user()->id])->get(['currency_id']);
-        if ($type == Deposit || $type == Escrow || $type == Withdrawal || $type == 'all')
+        if ($type == Deposit || $type == Withdrawal || $type == 'all')
         {
             $data['type'] = $type;
         }
@@ -55,7 +55,7 @@ class UserTransactionController extends Controller
                     $data['type'] = 'sent';
                     break;
 
-                case 'escrow':
+                case Escrow:
                     $data['type'] = 'escrow ';
                     break;
 

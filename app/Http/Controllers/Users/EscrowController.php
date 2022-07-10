@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\{Validator,
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Helpers\Common;
-use App\Models\{Transaction,
+use App\Models\{Escrow,
     FeesLimit,
     Transfer,
     Setting,
@@ -19,12 +19,12 @@ use App\Models\{Transaction,
 class EscrowController extends Controller
 {
     protected $helper;
-    protected $transfer;
+    protected $escrow;
 
     public function __construct()
     {
         $this->helper   = new Common();
-        $this->transfer = new Transfer();
+        $this->escrow = new Escrow();
     }
 
     //Send Money - Email/Phone validation
@@ -362,7 +362,7 @@ class EscrowController extends Controller
         $data['receiverName']            = isset($userInfo) ? $userInfo->first_name . ' ' . $userInfo->last_name : '';
 
         //Get responsed
-        $response = $this->transfer->processEscrowConfirmation($arr, 'web');
+        $response = $this->escrow->processEscrowConfirmation($arr, 'web');
         
         if ($response['status'] != 200)
         {
@@ -386,15 +386,15 @@ class EscrowController extends Controller
     public function releaseEscrow(){
 
         
-        $transfer = Transfer::findOrFail($request->eid);
+        $escrow = Transfer::findOrFail($request->eid);
         
     
-        if ($transfer->status == 'completed' ||  $transfer->status == 'refunded') {
+        if ($escrow->status == 'completed' ||  $escrow->status == 'refunded') {
             flash('Money Already Sent', 'danger');
             return back();
         }
 
-        if (Auth::user()->id != $transfer->user_id and Auth::user()->role_id != 1) {
+        if (Auth::user()->id != $escrow->user_id and Auth::user()->role_id != 1) {
                 flash('You dont have permition to release this payment', 'danger');
                 return back();
         }
@@ -405,7 +405,7 @@ class EscrowController extends Controller
         $escrow_wallet = Wallet::where('currency_id', $escrow->currency_id)->where('user_id', $escrow->user_id)->first();
 
         
-        $transactions = $transfer->transactions();
+        $transactions = $escrow->transactions();
 
         $escrow->escrow_transaction_status = 'completed';
         $escrow->save();

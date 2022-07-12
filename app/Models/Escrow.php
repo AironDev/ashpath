@@ -457,20 +457,12 @@ class Escrow extends Model
                 $arr['status']                   = $transfer->status;
                 
 
-                /*
-                    * create the transfered record and set status to pending
-                */
-                //Create Received Transaction 
-                // $transferredTransactionId        = self::createTransferredTransaction($arr);
-
-
-
                 //Create Ecrow Transaction  - user the actual beneficiary user here as end_user
                 self::createEscrowTransaction($arr); //good
 
                
                 //  suspend received transaction record
-                // self::createReceivedTransaction($arr); //good
+                self::createReceivedTransaction($arr); //good
 
 
                 /*
@@ -488,9 +480,6 @@ class Escrow extends Model
                 
                 //suspend crediting of receiver wallet
                 // self::createOrUpdateReceiverWallet($arr);
-
-
-
 
 
 
@@ -571,10 +560,6 @@ class Escrow extends Model
             return $response;
         }
     }
-
-
-
-
 
 
 

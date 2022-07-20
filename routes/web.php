@@ -603,6 +603,11 @@ Route::group(['middleware' => ['guest:users', 'locale', 'twoFa', 'check-user-ina
         Route::match(array('GET', 'POST'), 'transactions', 'UserTransactionController@index');
         Route::get('transactions/{id}', 'UserTransactionController@showDetails');
         Route::post('get_transaction', 'UserTransactionController@getTransaction');
+        
+
+        // release escrow
+        Route::get('release_escrow/{transaction}', 'EscrowController@releaseEscrow')->name('escrow_release');
+        
         Route::get('transactions/print/{id}', 'UserTransactionController@getTransactionPrintPdf');
         Route::get('transactions/exchangeTransactionPrintPdf/{id}', 'UserTransactionController@exchangeTransactionPrintPdf');
         Route::get('transactions/merchant-payment-print/{id}', 'UserTransactionController@merchantPaymentTransactionPrintPdf');

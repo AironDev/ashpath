@@ -11,6 +11,7 @@ use App\Http\Helpers\Common;
 use App\Models\{Escrow,
     FeesLimit,
     Transfer,
+    Transaction,
     Setting,
     Wallet,
     User
@@ -362,7 +363,7 @@ class EscrowController extends Controller
         $data['receiverName']            = isset($userInfo) ? $userInfo->first_name . ' ' . $userInfo->last_name : '';
 
         //Get responsed
-        $response = $this->escrow->processEscrowConfirmation($arr, 'web');
+        $response = $this->escrow->createEscrow($arr, 'web');
         
         if ($response['status'] != 200)
         {
@@ -383,34 +384,55 @@ class EscrowController extends Controller
     }
 
 
-    public function releaseEscrow(){
+    public function releaseEscrow(Transaction $transaction, Request $request){
 
+        // dd($transaction->transfer);
+        $escrow =  $transaction->transfer; //Transfer::findOrFail($request->transaction->id);
         
-        $escrow = Transfer::findOrFail($request->eid);
-        
-    
+        if($transaction->transaction_type_id != Escrow){
+            return redirect()->back()->with('danger', 'Sorry this transaction type cannot be released');
+        }
         if ($escrow->status == 'completed' ||  $escrow->status == 'refunded') {
             flash('Money Already Sent', 'danger');
             return back();
         }
 
         if (Auth::user()->id != $escrow->user_id and Auth::user()->role_id != 1) {
-                flash('You dont have permition to release this payment', 'danger');
-                return back();
+            $this->helper->one_time_message('error', 'You dont have permition to release this payment');
+            // return back();
+            // return redirect()->back()->with('danger', 'You dont have permition to release this payment');
         }
         
         
 
-        $receiver_wallet = Wallet::where('currency_id', $escrow->currency_id)->where('user_id', $escrow->to)->first();
-        $escrow_wallet = Wallet::where('currency_id', $escrow->currency_id)->where('user_id', $escrow->user_id)->first();
+        $receiver_wallet = Wallet::where('currency_id', $escrow->currency_id)->where('user_id', $escrow->receiver_id)->first();
+        $receiver_wallet->balance = ($receiver_wallet->balance + $escrow->amount);
+        $receiver_wallet->save();
+
+
+        $escrow_wallet = Wallet::whereId( getEscrowWallet() )->first(['id', 'balance']);
+        $escrow_wallet->balance = ($escrow_wallet->balance - $escrow->amount);
+        $escrow_wallet->save();
+
+
 
         
         $transactions = $escrow->transactions();
 
-        $escrow->escrow_transaction_status = 'completed';
-        $escrow->save();
+        $escrow->status = 'completed';
         
-        return  redirect(route('home', app()->getLocale()));
+        $transaction->status = 'Success';
+
+        $transactions = Transaction::where('transaction_reference_id', $escrow->id)->get();
+        foreach($transactions as $transaction){
+            $transaction->update(['status' => 'Success']);
+        }
+
+        
+        $escrow->save();
+        $transaction->save();
+        
+        return  back();
 
     }
 

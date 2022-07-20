@@ -348,14 +348,14 @@
                                                                                 </div>
                                                                                 <div class="col-md-12 col-sm-12">
                                                                                     <div class="text-center mb-4">
+                                                                                        
                                                                                         @if( $transaction->transaction_type_id == Payment_Sent && $transaction->status == 'Success' && !isset($transaction->dispute->id))
                                                                                             <a id="dispute_{{$transaction->id}}" href="{{url('/dispute/add/').'/'.$transaction->id}}" class="btn btn-grad btn-sm">@lang('message.dashboard.transaction.open-dispute')</a>
                                                                                         @endif
 
 
-                                                                                        @if( $transaction->status == 'Pending')
-                                                                                            
-                                                                                            <a href="http://paymoney.test/moneytransfer/print/60" target="_blank" class="btn btn-light pl-4 pr-4 btn-sm">Release</a>
+                                                                                        @if( $transaction->transaction_type_id == Escrow && $transaction->status == 'Pending')
+                                                                                            <a href="{{ route('escrow_release', $transaction->id ) }}"  class="btn btn-light pl-4 pr-4 btn-sm">Release</a>
                                                                                         @endif
 
 

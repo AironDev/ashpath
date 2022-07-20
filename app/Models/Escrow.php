@@ -17,6 +17,7 @@ class Escrow extends Model
     protected $fillable = [
         'sender_id',
         'receiver_id',
+        'receiver_id',
         'currency_id',
         'bank_id', 
         'file_id', 
@@ -422,7 +423,7 @@ class Escrow extends Model
 
 
 
-    public function processEscrowConfirmation($arr = [], $clearSessionFrom)
+    public function createEscrow($arr = [], $clearSessionFrom)
     {
         $response = ['status' => 401];
 

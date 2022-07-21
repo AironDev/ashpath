@@ -4,27 +4,55 @@
     $logo = getCompanyLogoWithoutSession(); //direct query
 ?>
 
-<section class="bg-image footer text-white mt-5">
-    <div class="bg-dark">
+<style> 
+    .mybtn-sub{
+        background: #009fff;
+        border-radius: 5px;
+        font-size: 12px;
+        color: white;
+        border:  none;
+        padding: 0 10px;
+        height: 50px;
+    }
+
+</style>    
+
+<section style=" background: #0051ff; color: white;">   
+    <div class="container" style="padding: 30px;"> 
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h5>SUBSCRIBE NEWSLETTER</h5>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.uos quidem corporis adipisci commodi. </p>
+            </div> 
+            <div class="col-md-6" style="display: flex;">
+                <input class="form-control" placeholder="Enter your email here" type=" ">
+                <button type="button" class="mybtn-sub" value="SUBSCRIBE">SUBSCRIBE</button>
+            </div> 
+        </div>  
+    </div>
+
+</section>  
+<section class="bg-image footer text-white">
+    <div class="" style="background: #0e0d1b">
         <div class="container pt-60 pb-3">
             <div class="row  justify-content-between">
-                <div class="col-xl-5">
+                
+                <div class="col-md-5">
                     <div>
                         <img src="{{theme_asset('public/images/logos/'.$logo)}}" class="mw-200" alt="logo">
                     </div>
-
-                    <p class="mt-3">{{ 'Ashpath' . __(', The most trusted, licensed online escrow service in the world') }}</p>
+                    <p class="mt-3">Ashpath is a company established to offer safe payment solutions and logistic services to business in Nigeria. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae eaque veritatis praesentium deleniti! Repudiandae nobis consectetur.</p>
                 </div>
 
-                <div class="col-xl-7 pt-3">
+                <div class="col-md-2 pt-3">
                     <div class="d-flex flex-wrap justify-content-between">
                         <div>
                             <h4>{{ __('Quick Links') }}</h4>
                             <ul class="link mt-3">
                                 <li class="mt-2"><a href="{{ url('/') }}" class="text-white">FAQ</a></li>
                                 <li class="mt-2"><a href="#" class="text-white">Contact</a></li>
-                                <!-- <li class="mt-2"><a href="{{ url('/request-money') }}" class="text-white">@lang('message.home.title-bar.request')</a></li> -->
-                               <!--  <li class="mt-2"><a href="{{ url('/developer') }}" class="text-white">@lang('message.home.title-bar.developer')</a></li> -->
+                                <li class="mt-2"><a href="{{ url('/request-money') }}" class="text-white">About</a></li>
+                                <li class="mt-2"><a href="{{ url('/developer') }}" class="text-white">Services</a></li>
                             </ul>
                         </div>
 
@@ -39,6 +67,57 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-2 pt-3">
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <div>
+                            <h4>{{ __('Quick Links') }}</h4>
+                            <ul class="link mt-3">
+                                <li class="mt-2"><a href="{{ url('/') }}" class="text-white">FAQ</a></li>
+                                <li class="mt-2"><a href="#" class="text-white">Contact</a></li>
+                                <li class="mt-2"><a href="{{ url('/request-money') }}" class="text-white">About</a></li>
+                                <li class="mt-2"><a href="{{ url('/developer') }}" class="text-white">Services</a></li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <ul class="link mt-4 pt-1">
+                                @if(!empty($menusFooter))
+                                    @foreach($menusFooter as $footer_navbar)
+                                        <li class="mt-2"><a href="{{url($footer_navbar->url)}}" class="text-white">{{ $footer_navbar->name }}</a></li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 pt-3">
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <div>
+                            <h4>{{ __('Quick Links') }}</h4>
+                            <ul class="link mt-3">
+                                <li class="mt-2"><a href="{{ url('/') }}" class="text-white">FAQ</a></li>
+                                <li class="mt-2"><a href="#" class="text-white">Contact</a></li>
+                                <li class="mt-2"><a href="{{ url('/request-money') }}" class="text-white">About</a></li>
+                                <li class="mt-2"><a href="{{ url('/developer') }}" class="text-white">Services</a></li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <ul class="link mt-4 pt-1">
+                                @if(!empty($menusFooter))
+                                    @foreach($menusFooter as $footer_navbar)
+                                        <li class="mt-2"><a href="{{url($footer_navbar->url)}}" class="text-white">{{ $footer_navbar->name }}</a></li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
             <div class="d-flex flex-wrap justify-content-between">

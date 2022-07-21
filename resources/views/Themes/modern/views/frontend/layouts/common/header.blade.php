@@ -6,11 +6,33 @@
     $logo = getCompanyLogoWithoutSession(); //direct query
 ?>
 
+<style>
+    a {
+         color: white; 
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .mybtn{
+        background: #0078ff;
+        border-radius: 5px;
+        font-size: 12px;
+        margin: 0 4px;
+    }
+
+    .mybtn-accent{
+        background: #009fff;
+        border-radius: 5px;
+        font-size: 12px;
+        margin: 0 4px;
+    }
+</style>
+
 <header id="js-header-old">
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-sm py-4" style="background-color: #0e0d1b">
         <div class="container">
             @if($logo)
-                <a style="width: 75px;overflow: hidden;"  class="navbar-brand" href="@if (request()->path() != 'merchant/payment') {{ url('/') }} @else {{ '#' }} @endif">
+                <a style="width: 160px;overflow: hidden;"  class="navbar-brand" href="@if (request()->path() != 'merchant/payment') {{ url('/') }} @else {{ '#' }} @endif">
                     <img src="{{theme_asset('public/images/logos/'.$logo)}}" alt="logo" class="img-fluid">
                 </a>
             @else
@@ -24,8 +46,8 @@
                     <i class="fas fa-bars"></i>
                 </button>
 
-                <div class="collapse navbar-collapse navbar-toggler-right" id="navbarSupportedContent">
-                    <ul class="navbar-nav  my-navbar">
+                <div class="collapse navbar-collapse navbar-toggler-right" style="justify-content: flex-end;" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto" style="margin: 0">
                         <li class="nav-item <?= isset( $menu ) && ( $menu == 'home' ) ? 'nav_active': '' ?>"><a href="{{url('/')}}" class="nav-link">Home</a></li>
                         <li class="nav-item <?= isset( $menu ) && ( $menu == 'send-money' ) ? 'nav_active': '' ?>"><a href="#" class="nav-link">Contact</a></li>
                         <li class="nav-item <?= isset( $menu ) && ( $menu == 'request-money' ) ? 'nav_active': '' ?>"><a href="#" class="nav-link">FAQ</a></li>
@@ -41,12 +63,31 @@
                             <li class="nav-item auth-menu"> <a href="{{url('/dashboard')}}" class="nav-link">@lang('message.home.title-bar.dashboard')</a> </li>
                             <li class="nav-item auth-menu"> <a href="{{url('/logout')}}" class="nav-link">@lang('message.home.title-bar.logout')</a> </li>
                         @endif
+
+
+                        @if( !Auth::check())
+                            @if (request()->path() == 'merchant/payment')
+                                {{-- @php
+                                    $grandId = $_GET['grant_id'];
+                                    $urlToken = $_GET['token'];
+                                @endphp
+                                <li class="nav-item"> <a class="nav-link" href="{{ url("merchant/payment?grant_id=$grandId&token=$urlToken") }}">@lang('message.home.title-bar.login')</a> </li> --}}
+                            @else
+                                <li class="nav-item"> <a class="nav-link mybtn" href="{{url('/login')}}">@lang('message.home.title-bar.login')</a> </li>
+                                <li class="nav-item"> <a class="nav-link mybtn-accent" href="{{url('/register')}}">@lang('message.home.title-bar.register')</a> </li>
+                            @endif
+                        @else
+                            <li class="nav-item"><a class="nav-link mybtn" href="{{url('/dashboard')}}">@lang('message.home.title-bar.dashboard')</a> </li>
+                            <li class="nav-item"><a class="nav-link mybtn-accent" href="{{url('/logout')}}">@lang('message.home.title-bar.logout')</a> </li>
+                        @endif
+
+
                     </ul>
                 </div>
 
             @endif
 
-            <div id="quick-contact" class="collapse navbar-collapse">
+           <!--  <div id="quick-contact" class="collapse navbar-collapse" style="width: 0px">
                 <ul class="ml-auto">
                     @if( !Auth::check())
                         @if (request()->path() == 'merchant/payment')
@@ -64,7 +105,7 @@
                         <li><a href="{{url('/logout')}}">@lang('message.home.title-bar.logout')</a> </li>
                     @endif
                 </ul>
-            </div>
+            </div> -->
         </div>
     </nav>
 

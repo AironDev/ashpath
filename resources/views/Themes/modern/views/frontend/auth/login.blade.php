@@ -1,11 +1,11 @@
 @extends('frontend.layouts.app')
 @section('content')
-<div class="min-vh-100">
+<div class="">
       <!--Start banner Section-->
-      <section class="bg-image">
-        <div class="bg-dark">
+      <section class="bg-image" style="background: #0051ff;">
+        <div class="">
             <div class="container">
-                <div class="row py-5">
+                <div class="row pt-5">
                     <div class="col-md-12">
                         <h2 class="text-white font-weight-bold text-28">@lang('message.login.title') </h2>
                     </div>
@@ -16,7 +16,7 @@
     <!--End banner Section-->
 
     <!--Start Section-->
-    <section class="mt-5">
+    <section class="" style="background: #0051ff">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -150,6 +150,8 @@
             <!--/row-->
         </div>
     </section>
+
+    <section style="background: #0e0d1b; padding: 5px"></section>
 </div>
 @endsection
 @section('js')

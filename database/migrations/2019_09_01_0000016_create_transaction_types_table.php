@@ -29,7 +29,12 @@ class CreateTransactionTypesTable extends Migration
                 'Payment_Received',
                 'Crypto_Sent',
                 'Crypto_Received',
+                
                 'Escrow',
+                'Crypto_Exchange_From',
+                'Crypto_Exchange_To',
+                'Fiat_Exchange_From',
+                'Fiat_Exchange_To',
 
             ]);
             //ALTER TABLE `transaction_types` CHANGE `name` `name` ENUM('Deposit','Withdrawal','Transferred','Received','Exchange_From','Exchange_To','Request_From','Request_To','Payment_Sent','Payment_Received','Crypto_Sent','Crypto_Received') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

@@ -44,7 +44,7 @@ class Transaction extends Model
     ];
 
     public static $cryptoTransactionsExcludes = ['merchant_id', 'bank_id', 'file_id', 'refund_reference', 'transaction_reference_id', 'email', 'phone', 'percentage', 'note'];
-    public static $transactionTypes           = [Deposit, Withdrawal, Transferred, Received, Exchange_From, Exchange_To, Request_From, Request_To, Payment_Sent, Payment_Received, Crypto_Sent, Crypto_Received];
+    public static $transactionTypes           = [Deposit, Withdrawal, Transferred, Received, Exchange_From, Exchange_To, Request_From, Request_To, Payment_Sent, Payment_Received, Crypto_Sent, Crypto_Received, Escrow];
 
 /*Start of relationships*/
     /**
@@ -268,10 +268,11 @@ class Transaction extends Model
         }
         $conditions['transactions.user_id'] = Auth::user()->id;
         $whereInCondition                   = self::$transactionTypes;
+
         if (!empty($type) && $type != 'all')
         {
             //$conditions['transactions.transaction_type_id'] = $type;
-            if ($type == Deposit || $type == Withdrawal)
+            if ($type == Deposit || $type == Withdrawal || $type == Escrow)
             {
                 $whereInCondition = [$type];
             }

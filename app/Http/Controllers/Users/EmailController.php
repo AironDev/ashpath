@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\{Config,
     DB
 };
 use PHPMailer\PHPMailer\PHPMailer;
+use App\Mail\Notify;
+
 
 class EmailController extends Controller
 {
@@ -26,19 +28,8 @@ class EmailController extends Controller
         );
 
         $emailConfig = DB::table('settings')->where(['type' => 'email', 'name' => 'driver'])->first();
+        Mail::to('airondev@gmail.com')->send(new Notify($data));
 
-        if ($emailConfig->value == 'smtp')
-        {
-            $this->setupEmailConfig();
-            $mail->CharSet  = 'UTF-8';
-            $mail->Encoding = 'base64';
-            $mail->send($data, 'emails.sendmail');
-        }
-        else
-        {
-            $emailInfo = '';
-            $this->sendPhpEmail($to, $subject, $message, $emailInfo);
-        }
     }
 
     public function sendEmailWithAttachment($to, $subject, $messageBody, $path, $attachedFile)

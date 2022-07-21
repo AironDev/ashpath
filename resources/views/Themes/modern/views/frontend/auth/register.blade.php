@@ -7,8 +7,8 @@
 @section('content')
 
 <!--Start banner Section-->
-<section class="bg-image">
-    <div class="bg-dark">
+<section class="bg-image" style="background: #0051ff;">
+    <div class="">
         <div class="container">
             <div class="row py-5">
                 <div class="col-md-12">
@@ -21,7 +21,7 @@
 <!--End banner Section-->
 
 <!--Start Section-->
-<section class="sign-up padding-30">
+<section class="sign-up padding-30" style="background: #0051ff; padding-bottom: 20px;">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -169,6 +169,8 @@
         </div>
     </div>
 </section>
+
+ <section style="background: #0e0d1b; padding: 5px"></section>
 @endsection
 
 @section('js')

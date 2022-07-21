@@ -29,7 +29,9 @@
         "twilio/sdk": "^6.19",
         "yajra/laravel-datatables": "^1.5",
         "block_io-php/block_io-php": "2.0.2",
-        "bitwasp/bitcoin": "dev-minimal"
+        "bitwasp/bitcoin": "dev-minimal",
+        "hassankhan/config": "^2.1",
+        "symfony/yaml": "5.1.x-dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -52,14 +54,21 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [],
+            "providers": [
+                "TechVill\\Theme\\Providers\\ThemeServiceProvider"
+            ],
+            "aliases": {
+                "Theme": "TechVill\\Theme\\Facades\\Theme"
+            }
         }
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "TechVill\\Theme\\": "packages/TechVill/Theme/src/"
         },
         "files": [
             "app/helpers.php"
@@ -75,10 +84,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],

@@ -43,7 +43,7 @@ class UserTransactionController extends Controller
         $data['transactions'] = $transaction->getTransactions($from, $to, $type, $wallet, $status);
 
         $data['wallets']      = Wallet::with(['currency:id,code'])->where(['user_id' => Auth::user()->id])->get(['currency_id']);
-        if ($type == Deposit || $type == Escrow || $type == Withdrawal || $type == 'all')
+        if ($type == Deposit || $type == Withdrawal || $type == 'all')
         {
             $data['type'] = $type;
         }
@@ -55,7 +55,7 @@ class UserTransactionController extends Controller
                     $data['type'] = 'sent';
                     break;
 
-                case 'escrow':
+                case Escrow:
                     $data['type'] = 'escrow ';
                     break;
 
@@ -814,6 +814,101 @@ class UserTransactionController extends Controller
                                         "<h4 class='mt-2 text-center text-white text-16'>". $transaction->created_at->format('jS F Y') . "</h4>" .
                                         "<div class='form-group mt-5 text-center'>" .
                                             "<a href='" . url('transactions/crypto-sent-received-print/' . encrypt($transaction->id)) . "' target='_blank' class='btn btn-light pl-4 pr-4 btn-sm'>" . __('message.dashboard.vouchers.success.print') . "</a> &nbsp;&nbsp;" .
+                                        "</div>";
+                    break;
+
+
+                case Escrow:
+
+                    $receiverEmailorPhone = '';
+                    $receiverName         = '';
+                    if (isset($transaction->email) && ($transaction->user_type == 'registered')) {
+                        $receiverEmailorPhone = $transaction->end_user->email;
+                        $receiverName = $transaction->transfer->receiver->first_name . ' ' . $transaction->transfer->receiver->last_name;
+                    } else if (isset($transaction->phone) && ($transaction->user_type == 'registered')) {
+                        $receiverEmailorPhone = $transaction->end_user->formattedPhone;
+                        $receiverName = $transaction->transfer->receiver->first_name . ' ' . $transaction->transfer->receiver->last_name;
+
+                    }
+
+                    if ($transaction->user_type == 'unregistered')
+                    {
+                        if (! empty($transaction->email)) {
+                            $unregisteredEmailOrPhone = "<div class='d-flex justify-content-between flex-wrap mt-2'>" .
+                                                            "<div><p>".  __('message.dashboard.left-table.transferred.transferred-to') . "</p></div>" .
+                                                            "<div><p>" . $transaction->email . "</p></div>" .
+                                                        "</div>" ;
+                        } else {
+                            $unregisteredEmailOrPhone = "<div class='d-flex justify-content-between flex-wrap mt-2'>" .
+                                                            "<div><p>".  __('message.dashboard.left-table.transferred.transferred-to') . "</p></div>" .
+                                                            "<div><p>" . $transaction->phone . "</p></div>" .
+                                                        "</div>" ;
+                        }
+                    }
+                    else
+                    {
+                        $unregisteredEmailOrPhone ="<div class='d-flex justify-content-between flex-wrap mt-2'>" .
+                                                        "<div><p>".  __('message.dashboard.left-table.transferred.transferred-to') . "</p></div>" .
+                                                        "<div><p>" .  $receiverName . " <strong>(" . $receiverEmailorPhone . ")</strong>" . "</p></div>" .
+                                                    "</div>" ;
+                    }
+
+                    $data['html'] = $unregisteredEmailOrPhone .
+                                    "<div class='d-flex justify-content-between flex-wrap mt-2'>" .
+                                        "<div><p>" . __('message.dashboard.left-table.transaction-id') . "</p></div>" .
+                                        "<div><p>" . $transaction->uuid . "</p></div>" .
+                                    "</div>" .
+
+                                    "<h4 class='text-18 mt-4 font-weight-600'>" . __('message.dashboard.left-table.details') . "</h4>" .
+                                
+                                    "<div class='d-flex justify-content-between flex-wrap mt-4'>" .
+                                        "<div><p>" . __('message.dashboard.left-table.transferred.transferred-amount') .  "</p></div>" .
+                                        "<div><p>" . moneyFormat($transaction->currency->symbol, formatNumber(abs($transaction->subtotal))) . "</p></div>" .
+                                    "</div>";
+
+
+
+                    $fee = abs($transaction->total) - abs($transaction->subtotal);
+                    if ($fee > 0)
+                    {
+                        $data['html'] .= "<div class='d-flex justify-content-between flex-wrap mt-2'>" .
+                                            "<div><p>" . __('message.dashboard.left-table.fee') .  "</p></div>" .
+                                            "<div><p>" . moneyFormat($transaction->currency->symbol, formatNumber($fee)) . "</p></div>" .
+                                        "</div>".
+
+                                        "<hr class='mb-2 mt-0'>" .
+                                    
+                                        "<div class='d-flex justify-content-between flex-wrap mt-2'>" .
+                                            "<div><p>" . __('message.dashboard.left-table.total') .  "</p></div>" .
+                                            "<div><p>" . moneyFormat($transaction->currency->symbol, formatNumber(abs($transaction->total))) . "</p></div>" .
+                                        "</div>".
+                                
+                                        "<h4 class='text-16 mt-4 font-weight-600'>" . __('message.dashboard.left-table.transferred.note') . "</h4>" .
+                                        "<div  class='act-detail-font'>" . $transaction->note . "</div>" ;
+                    }
+                    else
+                    {
+                        $data['html'] .= "<hr class='mb-2 mt-0'>" .
+                      
+                                        "<div class='d-flex justify-content-between flex-wrap mt-2'>" .
+                                            "<div><p>" . __('message.dashboard.left-table.total') .  "</p></div>" .
+                                            "<div><p>" . moneyFormat($transaction->currency->symbol, formatNumber(abs($transaction->total))) . "</p></div>" .
+                                        "</div>".
+                                    
+                                        "<h4  class='text-16 mt-4 font-weight-600'>" . __('message.dashboard.left-table.transferred.note') . "</h4>" .
+                                        "<div  class='act-detail-font'>" . $transaction->note . "</div>" ;
+                        
+                    }
+
+
+                    $data['total'] =  "<div class='text-center '>
+                                            <h2 class='text-white text-center font-weight-700 text-20'>" . __('message.dashboard.left-table.transferred.transferred-amount') . "</h2>
+                                            <h1 class='text-white mt-4'><strong>" . moneyFormat($transaction->currency->symbol, formatNumber(abs($transaction->total))) . "</strong></h1>
+                                        </div>" .
+                  
+                                        "<h4 class='mt-2 text-center text-white text-16'>". $transaction->created_at->format('jS F Y') . "</h4>" .
+                                        "<div class='form-group mt-5 text-center'>" .
+                                            "<a href='" . url('moneytransfer/print/' . $transaction->id) . "' target='_blank' class='btn btn-light pl-4 pr-4 btn-sm'>" . __('message.dashboard.vouchers.success.print') . "</a> &nbsp;&nbsp;" .
                                         "</div>";
                     break;
 

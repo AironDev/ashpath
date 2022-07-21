@@ -1,13 +1,32 @@
 @extends('frontend.layouts.app')
 @section('content')
-    <!--Start banner Section-->
+
+
+    <style type="text/css">
+        
+        .send-money .sec-title h2, .send-money .sec-title p{
+            color: white;
+        }
+
+        .right-bar p, .right-bar h2{
+            color: white;
+        }
+
+        .stepsbox{
+            background: #0078ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin:  5px;
+        }
+    </style>
+    <!--Start banner Sectionx-->
     <section class="welcome-area request-bg">
         <div class="overlay-banner-request"></div>
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <div class="welcome-text ">
-                        <h1>Secure P2P Payment and e-Wallet Service</h1>
+                        <h1 style="text-transform: uppercase; font-weight: 900; font-size: 40px; padding-bottom: 0px" class="uppercase">Secured Transactions</h1>
                         <h2>With ASHPATH you can buy and sell anything safely without the risk of chargebacks. Truly secure payments..</h2>
 
                         @if(Auth::check() == false)
@@ -25,7 +44,7 @@
     <!--End banner Section-->
 
     <!--Start Section A-->
-    <section class="mt-60">
+    <section class="pt-60 pb-60 " style="background: #0051ff; padding-bottom: 60px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -38,22 +57,22 @@
 
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <div class="right-bar">
-                        <h2><span>1</span>@lang('message.request-money.section-a.sub-section-1.title') </h2>
+                    <div class="right-bar stepsbox">
+                        <h2>@lang('message.request-money.section-a.sub-section-1.title') </h2>
                         <p>@lang('message.request-money.section-a.sub-section-1.sub-title') </p>
 
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="right-bar">
-                        <h2><span>2</span>Create Escrow</h2>
+                    <div class="right-bar stepsbox">
+                        <h2>Create Escrow</h2>
                         <p>Enter your recipient email address, Money will be held until both parties agree, then release money to send securely.</p>
 
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="right-bar">
-                        <h2><span>3</span>Release Money</h2>
+                    <div class="right-bar stepsbox">
+                        <h2>Release Money</h2>
                         <p>Open pending Escrow transaction and click on release to send money to beneficiary on reciept of value.</p>
 
                     </div>
@@ -83,22 +102,28 @@
     <!--End Section B-->
 
     <!--Start Section C -->
-    <section class="laptop-app  padding-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="sec-title-laptop">
+    <section class="">
+       
+            <div class="row no-gutters">
+                
+                <div class="col-md-6" style="display: flex; background: #0e0d1b; color: white;" >
+                    <div class="sec-title-laptop" style="margin:auto; padding: 40px">
                         <h2>Use the Ashpath Mobile App To Easily Request Money.</h2>
                         <p>Anyone with an email address can receive an Escrow transaction request, whether they have an account or not. They can pay you with PayPal, strip, 2checkout and many more payment corridors.</p>
                     </div>
                 </div>
+                
+                <div class="col-md-6">
+                    <img src="{{ theme_asset('public/images/banner/3rd-slider-pics.jpg') }}" alt="Phone Image"
+                         class="img-responsive img-fluid"/>
+                </div>
             </div>
-        </div>
+      
     </section>
     <!--End Section C-->
 
     <!--Start Section D-->
-    <section class="sending-money mt-60">
+   <!--  <section class="sending-money mt-60">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -109,12 +134,11 @@
                     <div class="sec-title" style="padding-top: 50px;">
                         <h2>Safely buy and sell products and services using our Secure P2P system</h2>
                         <p>Transfer funds to your friends & family conveniently through the Ashpath mobile app, bank account or others payment gateway. Funds directly go into your account whether the recipient have any account or not. You can send/request for money via different type of Payment Gateway with different currencies.</p>
-                        <!-- <a href="#"> Learn more about Paymoney fees</a> -->
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!--End Section D-->
 
 @endsection

@@ -1,3 +1,12 @@
-@include('emails.livery.html-header')
-<?=$content?>
-@include('emails.livery.html-footer')
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ $subject }}</title>
+        <style>
+        	
+        </style>
+    </head>
+    <body>
+		<?=$content?>
+    </body>
+</html>
